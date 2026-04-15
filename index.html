@@ -351,45 +351,73 @@ h1 {
 }
 
 /* ==================================================
-   【V3】パルス（呼吸）+ 常時光の粒
+   【V3】ボーダーランナー — 縁を金の光が一周
    ================================================== */
-.gii-cta--pulse {
-  animation: giiPulse 2.2s ease-in-out infinite;
+@property --giiAngle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.gii-cta--border-run {
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  overflow: visible !important;
+  isolation: auto !important;
 }
-@keyframes giiPulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), inset 0 -3px 0 rgba(0,0,0,0.2), 0 5px 0 #016b2c, 0 8px 20px rgba(6,199,85,0.45);
-  }
-  50% {
-    transform: scale(1.04);
-    box-shadow: inset 0 2px 0 rgba(255,255,255,0.7), inset 0 -3px 0 rgba(0,0,0,0.2), 0 7px 0 #016b2c, 0 14px 32px rgba(6,199,85,0.7), 0 0 30px rgba(77,220,136,0.5);
-  }
-}
-.gii-cta--pulse::after {
+.gii-cta--border-run::after {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.6) 0%, transparent 10%),
-              radial-gradient(circle at 70% 60%, rgba(255,255,255,0.5) 0%, transparent 8%),
-              radial-gradient(circle at 50% 80%, rgba(255,255,255,0.5) 0%, transparent 6%);
-  animation: giiGlint 3s linear infinite;
+  inset: -4px;
+  border-radius: 22px;
+  background: conic-gradient(
+    from var(--giiAngle),
+    transparent 0deg,
+    transparent 250deg,
+    rgba(255, 215, 0, 0.4) 270deg,
+    #ffd700 295deg,
+    #fffde7 320deg,
+    #ffffff 335deg,
+    #fffde7 345deg,
+    #ffd700 352deg,
+    rgba(255, 215, 0, 0.4) 358deg,
+    transparent 360deg
+  );
+  animation: giiBorderRun 2.6s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(2px);
+}
+.gii-cta--border-run::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 19px;
+  background: conic-gradient(
+    from var(--giiAngle),
+    transparent 0deg,
+    transparent 280deg,
+    #fff9c4 310deg,
+    #ffffff 335deg,
+    #fff9c4 355deg,
+    transparent 360deg
+  );
+  animation: giiBorderRun 2.6s linear infinite;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.7;
+  mix-blend-mode: screen;
+  opacity: 0.85;
 }
-@keyframes giiGlint {
-  0% { background-position: 0% 0%, 100% 100%, 50% 50%; }
-  100% { background-position: 100% 100%, 0% 0%, 80% 20%; }
+@keyframes giiBorderRun {
+  to { --giiAngle: 360deg; }
 }
-.gii-cta--pulse:hover {
-  animation: none;
-  transform: translateY(-5px) scale(1.06);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), inset 0 -3px 0 rgba(0,0,0,0.2), 0 10px 0 #016b2c, 0 16px 36px rgba(6,199,85,0.7), 0 0 40px rgba(77,220,136,0.6);
+.gii-cta--border-run:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), inset 0 -3px 0 rgba(0,0,0,0.2), 0 10px 0 #016b2c, 0 16px 36px rgba(6,199,85,0.65), 0 0 50px rgba(255,215,0,0.55);
 }
-.gii-cta--pulse:active {
+.gii-cta--border-run:hover::after,
+.gii-cta--border-run:hover::before {
+  animation-duration: 1.2s;
+}
+.gii-cta--border-run:active {
   transform: translateY(2px) scale(1.02);
   box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 0 #016b2c;
 }
@@ -594,20 +622,20 @@ h1 {
     <div class="pattern-head">
       <div>
         <div class="pattern-label">V3</div>
-        <div class="pattern-name">パルス呼吸 + 表面グリント</div>
+        <div class="pattern-name">ボーダーランナー — 縁を金の光が一周</div>
       </div>
     </div>
     <div class="preview-area">
-      <a href="#" class="gii-cta gii-cta--pulse">
+      <a href="#" class="gii-cta gii-cta--border-run">
         <span class="gii-cta__icon">▶</span>
         診断結果を受け取る
       </a>
     </div>
     <div class="behavior-note">
-      <strong>常時：</strong>ゆっくり脈動（2.2秒）＋表面に白い光の粒が流れる<br>
-      <strong>ホバー：</strong>脈動止まって大きく浮く＋緑グロー強化<br>
+      <strong>常時：</strong>ボタンの縁を金色の光がスーッと一周し続ける（2.6秒）<br>
+      <strong>ホバー：</strong>光が2倍速で駆け巡る＋ぽこっと浮く＋金グロー<br>
       <strong>クリック：</strong>ぽこっと沈む<br>
-      → <strong>心臓の鼓動っぽい「生きてる」感で視線誘導力◎</strong>
+      → <strong>縁だけ光るので上品。でも目を引く。</strong>Figmaの金キラキラ世界観と相性◎
     </div>
     <button class="code-toggle" onclick="toggleCode('code-v3')">HTMLコード を開く／閉じる</button>
     <div id="code-v3" class="code-section">
@@ -615,21 +643,23 @@ h1 {
         <span class="code-label">HTML + CSS（このまま貼るだけ）</span>
         <button class="copy-btn" onclick="copyCode(this, 'src-v3')">コピー</button>
 <pre><code id="src-v3">&lt;!-- HTML --&gt;
-&lt;a href="#" class="gii-cta gii-cta--pulse"&gt;
+&lt;a href="#" class="gii-cta gii-cta--border-run"&gt;
   &lt;span class="gii-cta__icon"&gt;▶&lt;/span&gt;
   診断結果を受け取る
 &lt;/a&gt;
 
 &lt;!-- CSS --&gt;
 &lt;style&gt;
-.gii-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(180deg,#4ddc88 0%,#06c755 50%,#028a3a 100%);color:#fff;font-size:20px;font-weight:900;padding:22px 44px;border-radius:18px;border:2px solid #016b2c;text-shadow:1px 1px 2px rgba(0,0,0,.35);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.2),0 5px 0 #016b2c,0 8px 20px rgba(6,199,85,.45);cursor:pointer;text-decoration:none;letter-spacing:2px;position:relative;overflow:hidden;isolation:isolate;font-family:'Noto Sans JP',sans-serif}
-.gii-cta__icon{width:32px;height:32px;background:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#06c755;font-size:14px;flex-shrink:0}
-.gii-cta--pulse{animation:giiPulse 2.2s ease-in-out infinite;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease}
-@keyframes giiPulse{0%,100%{transform:scale(1);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.2),0 5px 0 #016b2c,0 8px 20px rgba(6,199,85,.45)}50%{transform:scale(1.04);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),inset 0 -3px 0 rgba(0,0,0,.2),0 7px 0 #016b2c,0 14px 32px rgba(6,199,85,.7),0 0 30px rgba(77,220,136,.5)}}
-.gii-cta--pulse::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 30% 40%,rgba(255,255,255,.6) 0%,transparent 10%),radial-gradient(circle at 70% 60%,rgba(255,255,255,.5) 0%,transparent 8%),radial-gradient(circle at 50% 80%,rgba(255,255,255,.5) 0%,transparent 6%);animation:giiGlint 3s linear infinite;z-index:1;pointer-events:none;opacity:.7}
-@keyframes giiGlint{0%{background-position:0% 0%,100% 100%,50% 50%}100%{background-position:100% 100%,0% 0%,80% 20%}}
-.gii-cta--pulse:hover{animation:none;transform:translateY(-5px) scale(1.06);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -3px 0 rgba(0,0,0,.2),0 10px 0 #016b2c,0 16px 36px rgba(6,199,85,.7),0 0 40px rgba(77,220,136,.6)}
-.gii-cta--pulse:active{transform:translateY(2px) scale(1.02);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.2),0 2px 0 #016b2c}
+.gii-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(180deg,#4ddc88 0%,#06c755 50%,#028a3a 100%);color:#fff;font-size:20px;font-weight:900;padding:22px 44px;border-radius:18px;border:2px solid #016b2c;text-shadow:1px 1px 2px rgba(0,0,0,.35);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.2),0 5px 0 #016b2c,0 8px 20px rgba(6,199,85,.45);cursor:pointer;text-decoration:none;letter-spacing:2px;position:relative;font-family:'Noto Sans JP',sans-serif}
+.gii-cta__icon{width:32px;height:32px;background:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#06c755;font-size:14px;flex-shrink:0;position:relative;z-index:2}
+@property --giiAngle{syntax:'<angle>';inherits:false;initial-value:0deg}
+.gii-cta--border-run{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease}
+.gii-cta--border-run::after{content:'';position:absolute;inset:-4px;border-radius:22px;background:conic-gradient(from var(--giiAngle),transparent 0deg,transparent 250deg,rgba(255,215,0,.4) 270deg,#ffd700 295deg,#fffde7 320deg,#ffffff 335deg,#fffde7 345deg,#ffd700 352deg,rgba(255,215,0,.4) 358deg,transparent 360deg);animation:giiBorderRun 2.6s linear infinite;z-index:-1;pointer-events:none;filter:blur(2px)}
+.gii-cta--border-run::before{content:'';position:absolute;inset:-1px;border-radius:19px;background:conic-gradient(from var(--giiAngle),transparent 0deg,transparent 280deg,#fff9c4 310deg,#ffffff 335deg,#fff9c4 355deg,transparent 360deg);animation:giiBorderRun 2.6s linear infinite;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.85}
+@keyframes giiBorderRun{to{--giiAngle:360deg}}
+.gii-cta--border-run:hover{transform:translateY(-5px) scale(1.05);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -3px 0 rgba(0,0,0,.2),0 10px 0 #016b2c,0 16px 36px rgba(6,199,85,.65),0 0 50px rgba(255,215,0,.55)}
+.gii-cta--border-run:hover::after,.gii-cta--border-run:hover::before{animation-duration:1.2s}
+.gii-cta--border-run:active{transform:translateY(2px) scale(1.02);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.2),0 2px 0 #016b2c}
 &lt;/style&gt;</code></pre>
       </div>
     </div>
