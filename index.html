@@ -353,73 +353,71 @@ h1 {
 /* ==================================================
    【V3】ボーダーランナー — 縁を金の光が一周
    ================================================== */
-@property --giiAngle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
-.gii-cta--border-run {
+.gii-runner-wrap {
+  position: relative;
+  display: inline-block;
+  border-radius: 21px;
+  padding: 3px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #016b2c;
+  box-shadow:
+    0 5px 0 #014a1e,
+    0 8px 20px rgba(6,199,85,0.45);
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
-  overflow: visible !important;
-  isolation: auto !important;
 }
-.gii-cta--border-run::after {
+.gii-runner-wrap::before {
   content: '';
   position: absolute;
-  inset: -4px;
-  border-radius: 22px;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%) rotate(0deg);
   background: conic-gradient(
-    from var(--giiAngle),
+    from 0deg,
     transparent 0deg,
-    transparent 250deg,
-    rgba(255, 215, 0, 0.4) 270deg,
-    #ffd700 295deg,
-    #fffde7 320deg,
+    transparent 240deg,
+    rgba(255, 215, 0, 0.4) 265deg,
+    #ffd700 290deg,
+    #fffde7 315deg,
     #ffffff 335deg,
     #fffde7 345deg,
-    #ffd700 352deg,
-    rgba(255, 215, 0, 0.4) 358deg,
+    #ffd700 355deg,
     transparent 360deg
   );
-  animation: giiBorderRun 2.6s linear infinite;
-  z-index: -1;
+  animation: giiBorderRotate 2.6s linear infinite;
+  z-index: 0;
   pointer-events: none;
-  filter: blur(2px);
 }
-.gii-cta--border-run::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 19px;
-  background: conic-gradient(
-    from var(--giiAngle),
-    transparent 0deg,
-    transparent 280deg,
-    #fff9c4 310deg,
-    #ffffff 335deg,
-    #fff9c4 355deg,
-    transparent 360deg
-  );
-  animation: giiBorderRun 2.6s linear infinite;
+@keyframes giiBorderRotate {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.gii-runner-wrap .gii-cta--border-run {
+  position: relative;
   z-index: 1;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.85;
+  border: none;
+  border-radius: 18px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,0.5),
+    inset 0 -3px 0 rgba(0,0,0,0.2);
+  transition: none;
 }
-@keyframes giiBorderRun {
-  to { --giiAngle: 360deg; }
+.gii-runner-wrap:hover {
+  transform: translateY(-5px) scale(1.04);
+  box-shadow:
+    0 10px 0 #014a1e,
+    0 16px 36px rgba(6,199,85,0.65),
+    0 0 60px rgba(255,215,0,0.55);
 }
-.gii-cta--border-run:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), inset 0 -3px 0 rgba(0,0,0,0.2), 0 10px 0 #016b2c, 0 16px 36px rgba(6,199,85,0.65), 0 0 50px rgba(255,215,0,0.55);
-}
-.gii-cta--border-run:hover::after,
-.gii-cta--border-run:hover::before {
+.gii-runner-wrap:hover::before {
   animation-duration: 1.2s;
 }
-.gii-cta--border-run:active {
+.gii-runner-wrap:active {
   transform: translateY(2px) scale(1.02);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 0 #016b2c;
+  box-shadow:
+    0 2px 0 #014a1e,
+    0 4px 12px rgba(6,199,85,0.4);
 }
 
 /* ==================================================
@@ -626,10 +624,12 @@ h1 {
       </div>
     </div>
     <div class="preview-area">
-      <a href="#" class="gii-cta gii-cta--border-run">
-        <span class="gii-cta__icon">▶</span>
-        診断結果を受け取る
-      </a>
+      <div class="gii-runner-wrap">
+        <a href="#" class="gii-cta gii-cta--border-run">
+          <span class="gii-cta__icon">▶</span>
+          診断結果を受け取る
+        </a>
+      </div>
     </div>
     <div class="behavior-note">
       <strong>常時：</strong>ボタンの縁を金色の光がスーッと一周し続ける（2.6秒）<br>
@@ -643,23 +643,24 @@ h1 {
         <span class="code-label">HTML + CSS（このまま貼るだけ）</span>
         <button class="copy-btn" onclick="copyCode(this, 'src-v3')">コピー</button>
 <pre><code id="src-v3">&lt;!-- HTML --&gt;
-&lt;a href="#" class="gii-cta gii-cta--border-run"&gt;
-  &lt;span class="gii-cta__icon"&gt;▶&lt;/span&gt;
-  診断結果を受け取る
-&lt;/a&gt;
+&lt;div class="gii-runner-wrap"&gt;
+  &lt;a href="#" class="gii-cta gii-cta--border-run"&gt;
+    &lt;span class="gii-cta__icon"&gt;▶&lt;/span&gt;
+    診断結果を受け取る
+  &lt;/a&gt;
+&lt;/div&gt;
 
 &lt;!-- CSS --&gt;
 &lt;style&gt;
-.gii-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(180deg,#4ddc88 0%,#06c755 50%,#028a3a 100%);color:#fff;font-size:20px;font-weight:900;padding:22px 44px;border-radius:18px;border:2px solid #016b2c;text-shadow:1px 1px 2px rgba(0,0,0,.35);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.2),0 5px 0 #016b2c,0 8px 20px rgba(6,199,85,.45);cursor:pointer;text-decoration:none;letter-spacing:2px;position:relative;font-family:'Noto Sans JP',sans-serif}
+.gii-cta{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(180deg,#4ddc88 0%,#06c755 50%,#028a3a 100%);color:#fff;font-size:20px;font-weight:900;padding:22px 44px;border-radius:18px;text-shadow:1px 1px 2px rgba(0,0,0,.35);cursor:pointer;text-decoration:none;letter-spacing:2px;position:relative;font-family:'Noto Sans JP',sans-serif}
 .gii-cta__icon{width:32px;height:32px;background:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#06c755;font-size:14px;flex-shrink:0;position:relative;z-index:2}
-@property --giiAngle{syntax:'<angle>';inherits:false;initial-value:0deg}
-.gii-cta--border-run{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease}
-.gii-cta--border-run::after{content:'';position:absolute;inset:-4px;border-radius:22px;background:conic-gradient(from var(--giiAngle),transparent 0deg,transparent 250deg,rgba(255,215,0,.4) 270deg,#ffd700 295deg,#fffde7 320deg,#ffffff 335deg,#fffde7 345deg,#ffd700 352deg,rgba(255,215,0,.4) 358deg,transparent 360deg);animation:giiBorderRun 2.6s linear infinite;z-index:-1;pointer-events:none;filter:blur(2px)}
-.gii-cta--border-run::before{content:'';position:absolute;inset:-1px;border-radius:19px;background:conic-gradient(from var(--giiAngle),transparent 0deg,transparent 280deg,#fff9c4 310deg,#ffffff 335deg,#fff9c4 355deg,transparent 360deg);animation:giiBorderRun 2.6s linear infinite;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.85}
-@keyframes giiBorderRun{to{--giiAngle:360deg}}
-.gii-cta--border-run:hover{transform:translateY(-5px) scale(1.05);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -3px 0 rgba(0,0,0,.2),0 10px 0 #016b2c,0 16px 36px rgba(6,199,85,.65),0 0 50px rgba(255,215,0,.55)}
-.gii-cta--border-run:hover::after,.gii-cta--border-run:hover::before{animation-duration:1.2s}
-.gii-cta--border-run:active{transform:translateY(2px) scale(1.02);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.2),0 2px 0 #016b2c}
+.gii-runner-wrap{position:relative;display:inline-block;border-radius:21px;padding:3px;overflow:hidden;isolation:isolate;background:#016b2c;box-shadow:0 5px 0 #014a1e,0 8px 20px rgba(6,199,85,.45);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease}
+.gii-runner-wrap::before{content:'';position:absolute;top:50%;left:50%;width:250%;aspect-ratio:1/1;transform:translate(-50%,-50%) rotate(0deg);background:conic-gradient(from 0deg,transparent 0deg,transparent 240deg,rgba(255,215,0,.4) 265deg,#ffd700 290deg,#fffde7 315deg,#ffffff 335deg,#fffde7 345deg,#ffd700 355deg,transparent 360deg);animation:giiBorderRotate 2.6s linear infinite;z-index:0;pointer-events:none}
+@keyframes giiBorderRotate{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.gii-runner-wrap .gii-cta--border-run{position:relative;z-index:1;border:none;border-radius:18px;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.2)}
+.gii-runner-wrap:hover{transform:translateY(-5px) scale(1.04);box-shadow:0 10px 0 #014a1e,0 16px 36px rgba(6,199,85,.65),0 0 60px rgba(255,215,0,.55)}
+.gii-runner-wrap:hover::before{animation-duration:1.2s}
+.gii-runner-wrap:active{transform:translateY(2px) scale(1.02);box-shadow:0 2px 0 #014a1e,0 4px 12px rgba(6,199,85,.4)}
 &lt;/style&gt;</code></pre>
       </div>
     </div>
